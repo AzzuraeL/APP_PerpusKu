@@ -1,0 +1,19 @@
+<UserControl x:Class="PerpusKu.Controls.PagerBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- DataContext = ViewModel turunan PagedListViewModel -->
+    <Grid Margin="4,12,4,0">
+        <TextBlock Text="{Binding RangeText}" Style="{StaticResource Muted}" VerticalAlignment="Center"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Style="{StaticResource IconButton}" Command="{Binding PrevCommand}" IsEnabled="{Binding CanPrev}" ToolTip="Halaman sebelumnya">
+                <Path Data="{StaticResource Icon.chevron-left}" Style="{StaticResource IconPath}" Width="15" Height="15" Stroke="{DynamicResource TextBrush}"/>
+            </Button>
+            <TextBlock VerticalAlignment="Center" Margin="8,0" FontWeight="SemiBold" Foreground="{DynamicResource TextMutedBrush}">
+                <Run Text="{Binding PageNumber, Mode=OneWay}"/><Run Text=" / "/><Run Text="{Binding TotalPages, Mode=OneWay}"/>
+            </TextBlock>
+            <Button Style="{StaticResource IconButton}" Command="{Binding NextCommand}" IsEnabled="{Binding CanNext}" ToolTip="Halaman berikutnya">
+                <Path Data="{StaticResource Icon.chevron-right}" Style="{StaticResource IconPath}" Width="15" Height="15" Stroke="{DynamicResource TextBrush}"/>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

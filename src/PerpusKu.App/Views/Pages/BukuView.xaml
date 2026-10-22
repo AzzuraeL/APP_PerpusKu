@@ -1,0 +1,151 @@
+<UserControl x:Class="PerpusKu.Views.Pages.BukuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ctl="clr-namespace:PerpusKu.Controls">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Toolbar -->
+        <Grid Margin="0,0,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MaxWidth="360"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <ctl:SearchBox Text="{Binding SearchText, Mode=TwoWay}" Placeholder="Cari judul, penulis, atau kode…"/>
+            <ComboBox Grid.Column="1" Width="200" Margin="12,0,0,0" ItemsSource="{Binding KategoriFilter}"
+                      SelectedItem="{Binding SelectedKategori}" DisplayMemberPath="Nama"/>
+            <CheckBox Grid.Column="2" Content="Hanya yang tersedia" IsChecked="{Binding HanyaTersedia}" Margin="16,0,0,0" VerticalAlignment="Center"/>
+            <Border Grid.Column="4" Background="{DynamicResource SurfaceAltBrush}" CornerRadius="8" Padding="3" Margin="0,0,12,0" Height="40">
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Style="{StaticResource SegmentRadio}" GroupName="ViewMode" Content="Kartu"
+                                 IsChecked="{Binding IsCardView, Mode=OneWay}" Command="{Binding SetCardViewCommand}"/>
+                    <RadioButton Style="{StaticResource SegmentRadio}" GroupName="ViewMode" Content="Tabel"
+                                 IsChecked="{Binding IsTableView, Mode=OneWay}" Command="{Binding SetTableViewCommand}"/>
+                </StackPanel>
+            </Border>
+            <Button Grid.Column="5" Content="+  Tambah buku" Style="{StaticResource PrimaryButton}" Height="40"
+                    Command="{Binding TambahCommand}" Visibility="{Binding CanWrite, Converter={StaticResource BoolToVis}}"/>
+        </Grid>
+
+        <!-- Konten -->
+        <Grid Grid.Row="1">
+            <!-- Tampilan kartu -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Visibility="{Binding IsCardView, Converter={StaticResource BoolToVis}}">
+                <ItemsControl ItemsSource="{Binding PageItems}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource Card}" Width="268" Height="188" Margin="0,0,16,16" Padding="0" ClipToBounds="True">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Background="{Binding KategoriNama, Converter={StaticResource CategoryBrush}}" CornerRadius="8,0,0,8"/>
+                                    <Grid Grid.Column="1" Margin="16,14,14,12">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="{Binding KategoriNama}" FontSize="11" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"
+                                                   Foreground="{Binding KategoriNama, Converter={StaticResource CategoryBrush}}"/>
+                                        <StackPanel Grid.Row="1" Margin="0,6,0,0">
+                                            <TextBlock Text="{Binding Judul}" FontFamily="{StaticResource HeadFont}" FontSize="16" FontWeight="SemiBold"
+                                                       TextWrapping="Wrap" MaxHeight="46" TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Text="{Binding Penulis}" Style="{StaticResource Muted}" Margin="0,4,0,0" TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Text="{Binding PenerbitTahun}" Style="{StaticResource Muted}" FontSize="11.5" TextTrimming="CharacterEllipsis"/>
+                                        </StackPanel>
+                                        <Grid Grid.Row="2">
+                                            <StackPanel Orientation="Horizontal">
+                                                <ctl:StatusPill Status="{Binding Status}" Text="{Binding StokText}"/>
+                                                <TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Style="{StaticResource Muted}" FontSize="11.5">
+                                                    <Run Text="{Binding KodeBuku, Mode=OneWay}"/><Run Text=" · Rak "/><Run Text="{Binding Rak, Mode=OneWay}"/>
+                                                </TextBlock>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                                                        Visibility="{Binding DataContext.CanWrite, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}}">
+                                                <Button Style="{StaticResource PrimaryIconButton}" Width="30" Height="30" ToolTip="Ubah"
+                                                        Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">
+                                                    <Path Data="{StaticResource Icon.pencil}" Style="{StaticResource IconPath}" Width="14" Height="14" Stroke="{DynamicResource PrimaryBrush}"/>
+                                                </Button>
+                                                <Button Style="{StaticResource DangerIconButton}" Width="30" Height="30" ToolTip="Hapus"
+                                                        Command="{Binding DataContext.HapusCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">
+                                                    <Path Data="{StaticResource Icon.trash-2}" Style="{StaticResource IconPath}" Width="14" Height="14" Stroke="{DynamicResource DangerBrush}"/>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <!-- Tampilan tabel -->
+            <Border Style="{StaticResource Card}" Padding="6" Visibility="{Binding IsTableView, Converter={StaticResource BoolToVis}}">
+                <DataGrid ItemsSource="{Binding PageItems}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="KODE" Binding="{Binding KodeBuku}" Width="90"/>
+                        <DataGridTemplateColumn Header="JUDUL" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Judul}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Text="{Binding Penulis}" Style="{StaticResource Muted}" TextTrimming="CharacterEllipsis"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="KATEGORI" Binding="{Binding KategoriNama}" Width="170"/>
+                        <DataGridTemplateColumn Header="STOK" Width="130">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ctl:StatusPill Status="{Binding Status}" Text="{Binding StokText}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="RAK" Binding="{Binding Rak}" Width="70"/>
+                        <DataGridTemplateColumn Header="AKSI" Width="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal"
+                                                Visibility="{Binding DataContext.CanWrite, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}}">
+                                        <Button Style="{StaticResource PrimaryIconButton}" ToolTip="Ubah"
+                                                Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">
+                                            <Path Data="{StaticResource Icon.pencil}" Style="{StaticResource IconPath}" Width="14" Height="14" Stroke="{DynamicResource PrimaryBrush}"/>
+                                        </Button>
+                                        <Button Style="{StaticResource DangerIconButton}" ToolTip="Hapus"
+                                                Command="{Binding DataContext.HapusCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">
+                                            <Path Data="{StaticResource Icon.trash-2}" Style="{StaticResource IconPath}" Width="14" Height="14" Stroke="{DynamicResource DangerBrush}"/>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+
+            <!-- Kosong -->
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVis}}">
+                <Path Data="{StaticResource Icon.search}" Style="{StaticResource IconPath}" Width="40" Height="40" Stroke="{DynamicResource TextMutedBrush}" HorizontalAlignment="Center"/>
+                <TextBlock Text="Tidak ada buku yang cocok" Style="{StaticResource H2}" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                <TextBlock Text="Ubah kata kunci atau filter pencarian." Style="{StaticResource Muted}" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+
+        <ctl:PagerBar Grid.Row="2"/>
+    </Grid>
+</UserControl>

@@ -1,0 +1,32 @@
+# .NET / Visual Studio
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.userprefs
+*.cache
+project.lock.json
+
+# Build & publish hasil (jangan commit — 172MB exe, GitHub tolak >100MB)
+publish/
+release/
+artifacts/
+
+# IDE lain
+.idea/
+*.swp
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Log & sementara
+*.log
+*.tmp
+~$*
+
+# Data lokal aplikasi
+%APPDATA%
+prefs.json

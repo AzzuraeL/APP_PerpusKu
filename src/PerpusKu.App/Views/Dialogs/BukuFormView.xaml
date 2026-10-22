@@ -1,0 +1,77 @@
+<UserControl x:Class="PerpusKu.Views.Dialogs.BukuFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Margin="26,4,26,26" Width="560">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="Kode buku *" Style="{StaticResource FieldLabel}"/>
+                <TextBox Text="{Binding Kode, UpdateSourceTrigger=PropertyChanged}" MaxLength="20"/>
+                <TextBlock Text="{Binding EKode}" Style="{StaticResource FieldError}" Visibility="{Binding HasEKode, Converter={StaticResource BoolToVis}}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Kategori *" Style="{StaticResource FieldLabel}"/>
+                <ComboBox ItemsSource="{Binding KategoriList}" SelectedItem="{Binding Kategori}" DisplayMemberPath="Nama"/>
+                <TextBlock Text="{Binding EKategori}" Style="{StaticResource FieldError}" Visibility="{Binding HasEKategori, Converter={StaticResource BoolToVis}}"/>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Margin="0,14,0,0">
+            <TextBlock Text="Judul *" Style="{StaticResource FieldLabel}"/>
+            <TextBox Text="{Binding Judul, UpdateSourceTrigger=PropertyChanged}" MaxLength="200"/>
+            <TextBlock Text="{Binding EJudul}" Style="{StaticResource FieldError}" Visibility="{Binding HasEJudul, Converter={StaticResource BoolToVis}}"/>
+        </StackPanel>
+
+        <Grid Margin="0,14,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="Penulis *" Style="{StaticResource FieldLabel}"/>
+                <TextBox Text="{Binding Penulis, UpdateSourceTrigger=PropertyChanged}" MaxLength="120"/>
+                <TextBlock Text="{Binding EPenulis}" Style="{StaticResource FieldError}" Visibility="{Binding HasEPenulis, Converter={StaticResource BoolToVis}}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Penerbit" Style="{StaticResource FieldLabel}"/>
+                <TextBox Text="{Binding Penerbit, UpdateSourceTrigger=PropertyChanged}" MaxLength="120"/>
+                <TextBlock Text="{Binding EPenerbit}" Style="{StaticResource FieldError}" Visibility="{Binding HasEPenerbit, Converter={StaticResource BoolToVis}}"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Margin="0,14,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="Tahun terbit" Style="{StaticResource FieldLabel}"/>
+                <TextBox Text="{Binding Tahun, UpdateSourceTrigger=PropertyChanged}" MaxLength="4"/>
+                <TextBlock Text="{Binding ETahun}" Style="{StaticResource FieldError}" Visibility="{Binding HasETahun, Converter={StaticResource BoolToVis}}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Jumlah eksemplar *" Style="{StaticResource FieldLabel}"/>
+                <TextBox Text="{Binding Stok, UpdateSourceTrigger=PropertyChanged}" MaxLength="3"/>
+                <TextBlock Text="{Binding EStok}" Style="{StaticResource FieldError}" Visibility="{Binding HasEStok, Converter={StaticResource BoolToVis}}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="4">
+                <TextBlock Text="Rak" Style="{StaticResource FieldLabel}"/>
+                <TextBox Text="{Binding Rak, UpdateSourceTrigger=PropertyChanged}" MaxLength="20"/>
+                <TextBlock Text="{Binding ERak}" Style="{StaticResource FieldError}" Visibility="{Binding HasERak, Converter={StaticResource BoolToVis}}"/>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,26,0,0">
+            <Button Content="Batal" Command="{Binding CancelCommand}" Margin="0,0,10,0" MinWidth="90" IsCancel="True"/>
+            <Button Content="{Binding SubmitText}" Command="{Binding SaveCommand}" Style="{StaticResource PrimaryButton}" MinWidth="150" IsDefault="True"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

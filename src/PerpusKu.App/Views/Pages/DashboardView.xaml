@@ -1,0 +1,144 @@
+<UserControl x:Class="PerpusKu.Views.Pages.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ctl="clr-namespace:PerpusKu.Controls"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="0,0,8,0">
+            <!-- Sapaan -->
+            <Border CornerRadius="8" Padding="26,22" Margin="0,0,0,18" Background="{DynamicResource HeroBrush}">
+                <Grid>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Sapaan}" FontFamily="{StaticResource HeadFont}" FontSize="24" FontWeight="SemiBold" Foreground="{DynamicResource HeroTextBrush}"/>
+                        <TextBlock Margin="0,6,0,0" Foreground="{DynamicResource HeroMutedBrush}" FontSize="14">
+                            <Run Text="{Binding Stat.SedangDipinjam, Mode=OneWay}" FontWeight="Bold" Foreground="{DynamicResource HeroTextBrush}"/>
+                            <Run Text="buku sedang dipinjam,"/>
+                            <Run Text="{Binding Stat.JatuhTempoHariIni, Mode=OneWay}" FontWeight="Bold" Foreground="{DynamicResource HeroAccentBrush}"/>
+                            <Run Text="jatuh tempo hari ini, dan"/>
+                            <Run Text="{Binding Stat.Terlambat, Mode=OneWay}" FontWeight="Bold" Foreground="{DynamicResource HeroDangerBrush}"/>
+                            <Run Text="terlambat."/>
+                        </TextBlock>
+                    </StackPanel>
+                    <Button Content="Buka meja sirkulasi" Command="{Binding KeSirkulasiCommand}" HorizontalAlignment="Right" VerticalAlignment="Center"
+                            Background="{DynamicResource PrimaryBrush}" Foreground="{DynamicResource OnPrimaryBrush}" BorderThickness="0"/>
+                </Grid>
+            </Border>
+
+            <!-- Kartu statistik -->
+            <UniformGrid Columns="4" Margin="0,0,0,18">
+                <ctl:StatCard Label="Judul buku" Value="{Binding Stat.JudulBuku}" Caption="{Binding Stat.TotalEksemplar, StringFormat='{}{0} eksemplar'}"
+                              Glyph="library" AccentBrush="{DynamicResource PrimaryBrush}" SoftBrush="{DynamicResource PrimarySoftBrush}" Margin="0,0,9,0"/>
+                <ctl:StatCard Label="Anggota aktif" Value="{Binding Stat.AnggotaAktif}" Caption="Mahasiswa, dosen, dan staf"
+                              Glyph="users" AccentBrush="{DynamicResource AccentBrush}" SoftBrush="{DynamicResource AccentSoftBrush}" Margin="9,0,9,0"/>
+                <ctl:StatCard Label="Sedang dipinjam" Value="{Binding Stat.SedangDipinjam}" Caption="{Binding Stat.JatuhTempoHariIni, StringFormat='{}{0} jatuh tempo hari ini'}"
+                              Glyph="clock" AccentBrush="{DynamicResource SuccessBrush}" SoftBrush="{DynamicResource SuccessSoftBrush}" Margin="9,0,9,0"/>
+                <ctl:StatCard Label="Terlambat" Value="{Binding Stat.Terlambat}" Caption="{Binding Stat.DendaBulanIni, StringFormat='{}Denda bulan ini Rp {0:N0}'}"
+                              Glyph="triangle-alert" AccentBrush="{DynamicResource DangerBrush}" SoftBrush="{DynamicResource DangerSoftBrush}" Margin="9,0,0,0"/>
+            </UniformGrid>
+
+            <!-- Grafik -->
+            <Grid Margin="0,0,0,18">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.6*"/>
+                    <ColumnDefinition Width="18"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Text="Peminjaman 7 hari terakhir" Style="{StaticResource H2}"/>
+                        <TextBlock Text="Jumlah transaksi pinjam baru per hari" Style="{StaticResource Muted}" Margin="0,2,0,8"/>
+                        <lvc:CartesianChart Height="250" Series="{Binding TrenSeries}" XAxes="{Binding TrenXAxes}" YAxes="{Binding TrenYAxes}"/>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="2" Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Text="Koleksi per kategori" Style="{StaticResource H2}"/>
+                        <TextBlock Text="Jumlah judul buku" Style="{StaticResource Muted}" Margin="0,2,0,0"/>
+                        <lvc:PieChart Height="170" Margin="0,8,0,8" Series="{Binding KategoriSeries}"/>
+                        <ItemsControl ItemsSource="{Binding Legend}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,3">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Ellipse Width="10" Height="10" Fill="{Binding Brush}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Nama}" Margin="8,0" FontSize="12.5" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding Jumlah}" FontWeight="SemiBold" FontSize="12.5"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Daftar -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.3*"/>
+                    <ColumnDefinition Width="18"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <Grid>
+                            <TextBlock Text="Perlu perhatian" Style="{StaticResource H2}"/>
+                            <Button Content="Lihat riwayat" Style="{StaticResource GhostButton}" Command="{Binding LihatRiwayatCommand}"
+                                    HorizontalAlignment="Right" Padding="8,2"/>
+                        </Grid>
+                        <TextBlock Text="Terlambat atau jatuh tempo dalam 2 hari" Style="{StaticResource Muted}" Margin="0,2,0,10"/>
+                        <TextBlock Text="Tidak ada pinjaman yang perlu ditindaklanjuti. Mantap!" Style="{StaticResource Muted}" Margin="0,10"
+                                   Visibility="{Binding TidakAdaPerhatian, Converter={StaticResource BoolToVis}}"/>
+                        <ItemsControl ItemsSource="{Binding PerluPerhatian}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,0,0,2" MinHeight="52">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel VerticalAlignment="Center" Margin="0,6">
+                                            <TextBlock Text="{Binding Judul}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Style="{StaticResource Muted}" TextTrimming="CharacterEllipsis">
+                                                <Run Text="{Binding NamaAnggota, Mode=OneWay}"/><Run Text=" · "/><Run Text="{Binding KeteranganWaktu, Mode=OneWay}"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <ctl:StatusPill Grid.Column="1" Status="{Binding Status}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="2" Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Text="Aktivitas terbaru" Style="{StaticResource H2}"/>
+                        <TextBlock Text="Catatan sirkulasi dan perubahan data" Style="{StaticResource Muted}" Margin="0,2,0,10"/>
+                        <ItemsControl ItemsSource="{Binding Aktivitas}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Width="34" Height="34" CornerRadius="8" Background="{DynamicResource PrimarySoftBrush}" VerticalAlignment="Top">
+                                            <Path Data="{Binding Glyph, Converter={StaticResource IconGeom}}" Style="{StaticResource IconPath}" Width="15" Height="15" Stroke="{DynamicResource PrimaryBrush}"/>
+                                        </Border>
+                                        <StackPanel Grid.Column="1" Margin="12,0,0,0">
+                                            <TextBlock Text="{Binding Deskripsi}" TextWrapping="Wrap" FontSize="13"/>
+                                            <TextBlock Text="{Binding WaktuRelatif}" Style="{StaticResource Muted}" FontSize="11.5"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

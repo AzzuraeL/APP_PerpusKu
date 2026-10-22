@@ -1,0 +1,41 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- PerpusKu - Passport Travel UI light: paper #F5F2E9 + coral #FF7F50 + navy #1A237E + stamp ink #B71C1C -->
+    <SolidColorBrush x:Key="BgBrush" Color="#F5F2E9"/>
+    <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="SurfaceAltBrush" Color="#EFEADC"/>
+    <SolidColorBrush x:Key="BorderBrush" Color="#DCD5C4"/>
+    <SolidColorBrush x:Key="TextBrush" Color="#2D2D2D"/>
+    <SolidColorBrush x:Key="TextMutedBrush" Color="#6E6A5F"/>
+
+    <SolidColorBrush x:Key="PrimaryBrush" Color="#FF7F50"/>
+    <SolidColorBrush x:Key="PrimaryHoverBrush" Color="#EA754A"/>
+    <SolidColorBrush x:Key="PrimarySoftBrush" Color="#FFE3D8"/>
+    <SolidColorBrush x:Key="OnPrimaryBrush" Color="#FFFFFF"/>
+
+    <SolidColorBrush x:Key="AccentBrush" Color="#1A237E"/>
+    <SolidColorBrush x:Key="AccentSoftBrush" Color="#DDE0F2"/>
+    <SolidColorBrush x:Key="SuccessBrush" Color="#1A237E"/>
+    <SolidColorBrush x:Key="SuccessSoftBrush" Color="#DDE0F2"/>
+    <SolidColorBrush x:Key="WarnBrush" Color="#FF7F50"/>
+    <SolidColorBrush x:Key="WarnSoftBrush" Color="#FFE3D8"/>
+    <SolidColorBrush x:Key="DangerBrush" Color="#B71C1C"/>
+    <SolidColorBrush x:Key="DangerSoftBrush" Color="#F7DDDD"/>
+
+    <SolidColorBrush x:Key="RailBrush" Color="#1A237E"/>
+    <SolidColorBrush x:Key="RailTextBrush" Color="#C5C9EC"/>
+    <SolidColorBrush x:Key="RailActiveBrush" Color="#2C369F"/>
+    <SolidColorBrush x:Key="RailActiveTextBrush" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="RailAccentBrush" Color="#FF7F50"/>
+    <SolidColorBrush x:Key="RailAccentTextBrush" Color="#FFFFFF"/>
+
+    <!-- Hero panel (login + dashboard greeting) -->
+    <LinearGradientBrush x:Key="HeroBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#121752" Offset="0"/>
+        <GradientStop Color="#1A237E" Offset="1"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="HeroTextBrush" Color="#F5F2E9"/>
+    <SolidColorBrush x:Key="HeroMutedBrush" Color="#C5C9EC"/>
+    <SolidColorBrush x:Key="HeroAccentBrush" Color="#FF9470"/>
+    <SolidColorBrush x:Key="HeroDangerBrush" Color="#E46A6A"/>
+</ResourceDictionary>

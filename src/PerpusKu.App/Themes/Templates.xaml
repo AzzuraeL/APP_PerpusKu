@@ -1,0 +1,18 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:PerpusKu.ViewModels"
+                    xmlns:pages="clr-namespace:PerpusKu.Views.Pages"
+                    xmlns:dlg="clr-namespace:PerpusKu.Views.Dialogs">
+    <!-- ViewModel -> View -->
+    <DataTemplate DataType="{x:Type vm:DashboardViewModel}"><pages:DashboardView/></DataTemplate>
+    <DataTemplate DataType="{x:Type vm:BukuViewModel}"><pages:BukuView/></DataTemplate>
+    <DataTemplate DataType="{x:Type vm:AnggotaViewModel}"><pages:AnggotaView/></DataTemplate>
+    <DataTemplate DataType="{x:Type vm:SirkulasiViewModel}"><pages:SirkulasiView/></DataTemplate>
+    <DataTemplate DataType="{x:Type vm:RiwayatViewModel}"><pages:RiwayatView/></DataTemplate>
+    <DataTemplate DataType="{x:Type vm:LaporanViewModel}"><pages:LaporanView/></DataTemplate>
+    <DataTemplate DataType="{x:Type vm:PengaturanViewModel}"><pages:PengaturanView/></DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:BukuFormViewModel}"><dlg:BukuFormView/></DataTemplate>
+    <DataTemplate DataType="{x:Type vm:AnggotaFormViewModel}"><dlg:AnggotaFormView/></DataTemplate>
+    <DataTemplate DataType="{x:Type vm:ConfirmViewModel}"><dlg:ConfirmView/></DataTemplate>
+</ResourceDictionary>

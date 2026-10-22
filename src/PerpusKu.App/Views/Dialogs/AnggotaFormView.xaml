@@ -1,0 +1,48 @@
+<UserControl x:Class="PerpusKu.Views.Dialogs.AnggotaFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Margin="26,4,26,26" Width="520">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="Nomor anggota *" Style="{StaticResource FieldLabel}"/>
+                <TextBox Text="{Binding Nomor, UpdateSourceTrigger=PropertyChanged}" MaxLength="20"/>
+                <TextBlock Text="{Binding ENomor}" Style="{StaticResource FieldError}" Visibility="{Binding HasENomor, Converter={StaticResource BoolToVis}}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Tipe anggota" Style="{StaticResource FieldLabel}"/>
+                <ComboBox ItemsSource="{Binding TipeList}" SelectedItem="{Binding Tipe}"/>
+            </StackPanel>
+        </Grid>
+        <StackPanel Margin="0,14,0,0">
+            <TextBlock Text="Nama lengkap *" Style="{StaticResource FieldLabel}"/>
+            <TextBox Text="{Binding Nama, UpdateSourceTrigger=PropertyChanged}" MaxLength="120"/>
+            <TextBlock Text="{Binding ENama}" Style="{StaticResource FieldError}" Visibility="{Binding HasENama, Converter={StaticResource BoolToVis}}"/>
+        </StackPanel>
+        <Grid Margin="0,14,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="Email" Style="{StaticResource FieldLabel}"/>
+                <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" MaxLength="120"/>
+                <TextBlock Text="{Binding EEmail}" Style="{StaticResource FieldError}" Visibility="{Binding HasEEmail, Converter={StaticResource BoolToVis}}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Telepon" Style="{StaticResource FieldLabel}"/>
+                <TextBox Text="{Binding Telepon, UpdateSourceTrigger=PropertyChanged}" MaxLength="30"/>
+                <TextBlock Text="{Binding ETelepon}" Style="{StaticResource FieldError}" Visibility="{Binding HasETelepon, Converter={StaticResource BoolToVis}}"/>
+            </StackPanel>
+        </Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,26,0,0">
+            <Button Content="Batal" Command="{Binding CancelCommand}" Margin="0,0,10,0" MinWidth="90" IsCancel="True"/>
+            <Button Content="{Binding SubmitText}" Command="{Binding SaveCommand}" Style="{StaticResource PrimaryButton}" MinWidth="170" IsDefault="True"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

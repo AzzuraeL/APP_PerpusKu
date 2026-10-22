@@ -1,0 +1,144 @@
+<UserControl x:Class="PerpusKu.Views.Pages.SirkulasiView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ctl="clr-namespace:PerpusKu.Controls">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="420"/>
+            <ColumnDefinition Width="18"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ===== Pinjam ===== -->
+        <Border Style="{StaticResource Card}" VerticalAlignment="Top">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Border Width="38" Height="38" CornerRadius="8" Background="{DynamicResource PrimarySoftBrush}">
+                        <Path Data="{StaticResource Icon.clock}" Style="{StaticResource IconPath}" Stroke="{DynamicResource PrimaryBrush}"/>
+                    </Border>
+                    <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="Pinjamkan buku" Style="{StaticResource H2}"/>
+                        <TextBlock Text="Ketik nomor anggota dan kode buku" Style="{StaticResource Muted}"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <TextBlock Text="Nomor anggota" Style="{StaticResource FieldLabel}" Margin="2,22,0,6"/>
+                <TextBox Text="{Binding NomorAnggota, UpdateSourceTrigger=PropertyChanged}" Height="42"/>
+                <Border Background="{DynamicResource PrimarySoftBrush}" CornerRadius="8" Padding="12,9" Margin="0,8,0,0"
+                        Visibility="{Binding AdaAnggota, Converter={StaticResource BoolToVis}}">
+                    <StackPanel>
+                        <TextBlock Text="{Binding AnggotaInfo.Nama}" FontWeight="SemiBold"/>
+                        <TextBlock Style="{StaticResource Muted}">
+                            <Run Text="{Binding AnggotaInfo.Tipe, Mode=OneWay}"/><Run Text=" · "/><Run Text="{Binding AnggotaInfo.SedangPinjam, Mode=OneWay}"/><Run Text=" buku sedang dipinjam"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+                <TextBlock Text="Nomor anggota tidak ditemukan." Style="{StaticResource FieldError}"
+                           Visibility="{Binding AnggotaTidakAda, Converter={StaticResource BoolToVis}}"/>
+
+                <TextBlock Text="Kode buku" Style="{StaticResource FieldLabel}" Margin="2,16,0,6"/>
+                <TextBox Text="{Binding KodeBuku, UpdateSourceTrigger=PropertyChanged}" Height="42"/>
+                <Border Background="{DynamicResource PrimarySoftBrush}" CornerRadius="8" Padding="12,9" Margin="0,8,0,0"
+                        Visibility="{Binding AdaBuku, Converter={StaticResource BoolToVis}}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="{Binding BukuInfo.Judul}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Text="{Binding BukuInfo.Penulis}" Style="{StaticResource Muted}" TextTrimming="CharacterEllipsis"/>
+                        </StackPanel>
+                        <ctl:StatusPill Grid.Column="1" Status="{Binding BukuInfo.Status}" Text="{Binding BukuInfo.StokText}" Margin="8,0,0,0"/>
+                    </Grid>
+                </Border>
+                <TextBlock Text="Kode buku tidak ditemukan." Style="{StaticResource FieldError}"
+                           Visibility="{Binding BukuTidakAda, Converter={StaticResource BoolToVis}}"/>
+
+                <TextBlock Text="{Binding DendaInfo}" Style="{StaticResource Muted}" Margin="0,18,0,0"/>
+
+                <Grid Margin="0,18,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Pinjamkan" Command="{Binding PinjamCommand}" Style="{StaticResource PrimaryButton}" Height="44"/>
+                    <Button Grid.Column="1" Content="Bersihkan" Command="{Binding BersihkanCommand}" Height="44" Margin="10,0,0,0"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <!-- ===== Kembalikan / perpanjang ===== -->
+        <Border Grid.Column="2" Style="{StaticResource Card}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="38" Height="38" CornerRadius="8" Background="{DynamicResource AccentSoftBrush}">
+                            <Path Data="{StaticResource Icon.check}" Style="{StaticResource IconPath}" Stroke="{DynamicResource AccentBrush}"/>
+                        </Border>
+                        <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="Pengembalian &amp; perpanjangan" Style="{StaticResource H2}"/>
+                            <TextBlock Text="Cari pinjaman aktif berdasarkan buku atau anggota" Style="{StaticResource Muted}"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <ctl:SearchBox Text="{Binding Keyword, Mode=TwoWay}" Placeholder="Cari judul, kode, nama, atau nomor anggota…" Margin="0,18,0,12"/>
+                </StackPanel>
+
+                <Grid Grid.Row="1">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding Aktif}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="{DynamicResource SurfaceAltBrush}" CornerRadius="8" Padding="14,10" Margin="0,0,0,8">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Judul}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Style="{StaticResource Muted}" TextTrimming="CharacterEllipsis">
+                                                    <Run Text="{Binding NamaAnggota, Mode=OneWay}"/><Run Text=" · "/><Run Text="{Binding NomorAnggota, Mode=OneWay}"/>
+                                                </TextBlock>
+                                                <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+                                                    <ctl:StatusPill Status="{Binding Status}"/>
+                                                    <TextBlock Text="{Binding KeteranganWaktu}" Style="{StaticResource Muted}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding DendaTampil, StringFormat='{}Denda Rp {0:N0}'}" Margin="10,0,0,0" VerticalAlignment="Center"
+                                                               FontSize="12.5" FontWeight="SemiBold" Foreground="{DynamicResource DangerBrush}">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Status}" Value="Terlambat">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <Button Grid.Column="1" Content="Perpanjang" Margin="10,0,8,0" VerticalAlignment="Center"
+                                                    Command="{Binding DataContext.PerpanjangCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding}"/>
+                                            <Button Grid.Column="2" Content="Kembalikan" Style="{StaticResource PrimaryButton}" VerticalAlignment="Center"
+                                                    Command="{Binding DataContext.KembalikanCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding}"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <TextBlock Text="Tidak ada pinjaman aktif yang cocok." Style="{StaticResource Muted}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Visibility="{Binding AktifKosong, Converter={StaticResource BoolToVis}}"/>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

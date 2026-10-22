@@ -1,0 +1,42 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- PerpusKu - dark: primary #0F0F0F, secondary #4A4A4A, tertiary #E8C547,
+         neutral #D4D4D4, surface #5C0A0A, accent #FF2D2D -->
+    <SolidColorBrush x:Key="BgBrush" Color="#0F0F0F"/>
+    <SolidColorBrush x:Key="SurfaceBrush" Color="#5C0A0A"/>
+    <SolidColorBrush x:Key="SurfaceAltBrush" Color="#701414"/>
+    <SolidColorBrush x:Key="BorderBrush" Color="#4A4A4A"/>
+    <SolidColorBrush x:Key="TextBrush" Color="#D4D4D4"/>
+    <SolidColorBrush x:Key="TextMutedBrush" Color="#8F8F8F"/>
+
+    <SolidColorBrush x:Key="PrimaryBrush" Color="#FF2D2D"/>
+    <SolidColorBrush x:Key="PrimaryHoverBrush" Color="#EA2929"/>
+    <SolidColorBrush x:Key="PrimarySoftBrush" Color="#4A1212"/>
+    <SolidColorBrush x:Key="OnPrimaryBrush" Color="#0F0F0F"/>
+
+    <SolidColorBrush x:Key="AccentBrush" Color="#E8C547"/>
+    <SolidColorBrush x:Key="AccentSoftBrush" Color="#3A3013"/>
+    <SolidColorBrush x:Key="SuccessBrush" Color="#E8C547"/>
+    <SolidColorBrush x:Key="SuccessSoftBrush" Color="#3A3013"/>
+    <SolidColorBrush x:Key="WarnBrush" Color="#F3793A"/>
+    <SolidColorBrush x:Key="WarnSoftBrush" Color="#3D1C10"/>
+    <SolidColorBrush x:Key="DangerBrush" Color="#FF2D2D"/>
+    <SolidColorBrush x:Key="DangerSoftBrush" Color="#4A1212"/>
+
+    <SolidColorBrush x:Key="RailBrush" Color="#141414"/>
+    <SolidColorBrush x:Key="RailTextBrush" Color="#8F8F8F"/>
+    <SolidColorBrush x:Key="RailActiveBrush" Color="#5C0A0A"/>
+    <SolidColorBrush x:Key="RailActiveTextBrush" Color="#D4D4D4"/>
+    <SolidColorBrush x:Key="RailAccentBrush" Color="#E8C547"/>
+    <SolidColorBrush x:Key="RailAccentTextBrush" Color="#0F0F0F"/>
+
+    <!-- Hero panel (login + dashboard greeting) -->
+    <LinearGradientBrush x:Key="HeroBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#0F0F0F" Offset="0"/>
+        <GradientStop Color="#5C0A0A" Offset="1"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="HeroTextBrush" Color="#D4D4D4"/>
+    <SolidColorBrush x:Key="HeroMutedBrush" Color="#8F8F8F"/>
+    <SolidColorBrush x:Key="HeroAccentBrush" Color="#E8C547"/>
+    <SolidColorBrush x:Key="HeroDangerBrush" Color="#FF2D2D"/>
+</ResourceDictionary>
